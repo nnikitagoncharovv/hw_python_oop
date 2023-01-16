@@ -93,7 +93,7 @@ class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
 
     CALORIES_WEIGHT_MULTIPLIER = 0.035
-    CALORIES_WEIGHT_MULTIPLIER_2 = 0.029
+    CALORIES_SPEED_HEIGHT_MULTIPLIER = 0.029
     CALORIES_MULTIPLIER_3 = 2
 
     def __init__(self,
@@ -114,7 +114,7 @@ class SportsWalking(Training):
         """Получить количество затраченных калорий."""
         spent_calories = ((self.CALORIES_WEIGHT_MULTIPLIER * self.weight
                           + (self.get_mean_speed()**self.CALORIES_MULTIPLIER_3
-                           / self.height) * self.CALORIES_WEIGHT_MULTIPLIER_2)
+                           / self.height) * self.CALORIES_SPEED_HEIGHT_MULTIPLIER)
                           * self.weight) * (self.duration * self.MIN_IN_H)
         return spent_calories
 
