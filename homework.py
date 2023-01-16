@@ -169,10 +169,11 @@ def read_package(workout_type: str, data: list) -> Training:
               'получен неизвестный код тренировки.')
 
 
-def main(training: Training) -> None:
+def main(training: Training) -> str:
     """Главная функция."""
-    info = Training.show_training_info(training)
-    print(InfoMessage.get_message(info))
+    if isinstance(training, Training):
+        info = Training.show_training_info(training)
+        print(InfoMessage.get_message(info))
 
 
 if __name__ == '__main__':
