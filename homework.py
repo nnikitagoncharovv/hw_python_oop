@@ -15,7 +15,7 @@ class InfoMessage:
                  distance: float,
                  speed: float,
                  calories: float
-                 ) -> None:
+                 ) -> str:
         self.training_type = training_type
         self.duration = duration
         self.distance = distance
@@ -38,7 +38,7 @@ class Training:
 
     LEN_STEP = 0.65
     M_IN_KM = 1000
-    MINUTES_PER_HOUR = 60
+    MIN_IN_H = 60
 
     def __init__(self,
                  action: int,
@@ -85,7 +85,7 @@ class Running(Training):
                           * self.get_mean_speed()
                           + CALORIES_MEAN_SPEED_SHIFT) * (self.weight
                           / self.M_IN_KM) * (self.duration
-                          * self.MINUTES_PER_HOUR))
+                          * self.MIN_IN_H))
         return spent_calories
 
 
@@ -108,14 +108,14 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        CALORIES_WEIGHT_MULTIPLIER_1 = 0.035
+        CALORIES_WEIGHT_MULTIPLIER = 0.035
         CALORIES_WEIGHT_MULTIPLIER_2 = 0.029
         CALORIES_MULTIPLIER_3 = 2
-        spent_calories = ((CALORIES_WEIGHT_MULTIPLIER_1 * self.weight
+        spent_calories = ((CALORIES_WEIGHT_MULTIPLIER * self.weight
                           + (self.get_mean_speed()**CALORIES_MULTIPLIER_3
                            / self.height) * CALORIES_WEIGHT_MULTIPLIER_2)
                           * self.weight) * (self.duration
-                          * self.MINUTES_PER_HOUR)
+                          * self.MIN_IN_H)
         return spent_calories
 
 
@@ -123,6 +123,7 @@ class Swimming(Training):
     """Тренировка: плавание."""
 
     LEN_STEP = 1.38
+    CONST = 1.1
 
     def __init__(self,
                  action: int,
@@ -143,10 +144,9 @@ class Swimming(Training):
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        coeff_calorie_1 = 1.1
-        coeff_calorie_2 = 2
-        spent_calories = ((Swimming.get_mean_speed(self) + coeff_calorie_1)
-                          * coeff_calorie_2 * self.duration)
+        CONST_2 = 2
+        spent_calories = ((Swimming.get_mean_speed(self) + self.CONST)
+                          * CONST_2 * self.duration)
         return spent_calories
 
 
