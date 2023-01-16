@@ -114,8 +114,7 @@ class SportsWalking(Training):
         spent_calories = ((CALORIES_WEIGHT_MULTIPLIER * self.weight
                           + (self.get_mean_speed()**CALORIES_MULTIPLIER_3
                            / self.height) * CALORIES_WEIGHT_MULTIPLIER_2)
-                          * self.weight) * (self.duration
-                          * self.MIN_IN_H)
+                          * self.weight) * (self.duration * self.MIN_IN_H)
         return spent_calories
 
 
@@ -144,9 +143,9 @@ class Swimming(Training):
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        CONST_2 = 2
+        const_2 = 2
         spent_calories = ((Swimming.get_mean_speed(self) + self.CONST)
-                          * CONST_2 * self.duration)
+                          * const_2 * self.duration)
         return spent_calories
 
 
