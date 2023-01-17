@@ -94,7 +94,6 @@ class SportsWalking(Training):
 
     CALORIES_WEIGHT_MULTIPLIER = 0.035
     CALORIES_SPEED_HEIGHT_MULTIPLIER = 0.029
-    CALORIES_MULTIPLIER_3 = 2
     KMH_IN_MSEC = 0.278
     CM_IN_M = 100
 
@@ -114,12 +113,13 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        spent_calories = ((self.CALORIES_WEIGHT_MULTIPLIER * self.weight
-                          + (((self.get_mean_speed() / self.KMH_IN_MSEC)
-                           ** self.CALORIES_MULTIPLIER_3)
-                           / self.height / self.CM_IN_M)
-                           * self.CALORIES_SPEED_HEIGHT_MULTIPLIER
-                          * self.weight) * (self.duration * self.MIN_IN_H))
+        speed = self.get_mean_speed() / self.KMH_IN_MSEC
+        duration_min = self.duration * self.MIN_IN_H
+        height_m = self.height / self.CM_IN_M
+        spent_calories = (self.CALORIES_WEIGHT_MULTIPLIER * self.weight
+                          + (speed ** 2 / height_m)
+                          * self.CALORIES_SPEED_HEIGHT_MULTIPLIER
+                          * self.weight) * duration_min
         return spent_calories
 
 
