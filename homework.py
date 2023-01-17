@@ -115,11 +115,11 @@ class SportsWalking(Training):
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         spent_calories = ((self.CALORIES_WEIGHT_MULTIPLIER * self.weight
-                          + ((self.get_mean_speed() * self.KMH_IN_MSEC)
-                           ** self.CALORIES_MULTIPLIER_3
+                          + (((self.get_mean_speed()/self.KMH_IN_MSEC)
+                           ** self.CALORIES_MULTIPLIER_3)
                            / self.height / self.CM_IN_M)
-                           * self.CALORIES_SPEED_HEIGHT_MULTIPLIER)
-                          * self.weight) * (self.duration * self.MIN_IN_H)
+                           * self.CALORIES_SPEED_HEIGHT_MULTIPLIER
+                          * self.weight) * (self.duration * self.MIN_IN_H))
         return spent_calories
 
 
@@ -173,7 +173,8 @@ def main(training: Training) -> str:
     """Главная функция."""
     if isinstance(training, Training):
         info = Training.show_training_info(training)
-        print(InfoMessage.get_message(info))
+        result = InfoMessage.get_message(info)
+        print(result)
 
 
 if __name__ == '__main__':
