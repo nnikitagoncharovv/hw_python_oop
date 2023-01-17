@@ -171,10 +171,10 @@ def read_package(workout_type: str, data: list) -> Training:
 
 def main(training: Training) -> str:
     """Главная функция."""
-    if isinstance(training, Training):
-        info = Training.show_training_info(training)
-        result = InfoMessage.get_message(info)
-        print(result)
+    info = training.show_training_info()
+    result = info.get_message()
+    print(result)
+    return result
 
 
 if __name__ == '__main__':
