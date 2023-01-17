@@ -120,13 +120,6 @@ class SportsWalking(Training):
                           + ((speed ** 2) / height_m)
                           * self.CALORIES_SPEED_HEIGHT_MULTIPLIER
                           * self.weight) * duration_min
-        print(self.CALORIES_WEIGHT_MULTIPLIER)
-        print(self.weight)
-        print(speed)
-        print(height_m)
-        print(self.CALORIES_SPEED_HEIGHT_MULTIPLIER)
-        print(self.weight)
-        print(duration_min)
         return spent_calories
 
 
