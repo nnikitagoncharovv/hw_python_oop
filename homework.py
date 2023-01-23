@@ -184,7 +184,7 @@ def main(training: Training):
 
 if __name__ == '__main__':
     packages = [
-        ('SWMss', [720, 1, 80, 25, 40]),
+        ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
     ]
