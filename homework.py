@@ -19,7 +19,7 @@ class InfoMessage:
     speed: float
     calories: float
 
-    msg = (
+    MSG = (
         'Тип тренировки: {training_type}; '
         'Длительность: {duration:.3f} ч.; '
         'Дистанция: {distance:.3f} км; '
@@ -29,7 +29,7 @@ class InfoMessage:
 
     def get_message(self) -> str:
         """Верни строку сообщения."""
-        return self.msg.format(**dataclasses.asdict(self))
+        return self.MSG.format(**dataclasses.asdict(self))
 
 
 class Training:
@@ -164,12 +164,17 @@ def read_package(
     workout_type: str, data: typing.List[typing.Union[int, float]],
 ) -> Training:
     """Верни данные полученные от датчиков."""
-    WT_TO_CLASS: typing.Dict[str, typing.Type[Training]] = {
+
+    WORKOUT_TO_CLASS: typing.Dict[str, typing.Type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
         'WLK': SportsWalking,
     }
-    return WT_TO_CLASS[workout_type](*data)
+    try:
+        return WORKOUT_TO_CLASS[workout_type](*data)
+    except KeyError:
+        raise KeyError(f'«{workout_type}» - от датчиков устройства '
+                       f'получен неизвестный код тренировки.')
 
 
 def main(training: Training):
@@ -179,17 +184,11 @@ def main(training: Training):
 
 if __name__ == '__main__':
     packages = [
-        ('SWM', [720, 1, 80, 25, 40]),
+        ('SWMss', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
     ]
 
     for workout_type, data in packages:
-        try:
-            training = read_package(workout_type, data)
-        except KeyError:
-            print(
-                f'KeyError: «{workout_type}» - от датчиков устройства '
-                'получен неизвестный код тренировки.')
-        else:
-            main(training)
+        training = read_package(workout_type, data)
+        main(training)
