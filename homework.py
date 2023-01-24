@@ -164,7 +164,6 @@ def read_package(
     workout_type: str, data: typing.List[typing.Union[int, float]],
 ) -> Training:
     """Верни данные полученные от датчиков."""
-
     WORKOUT_TO_CLASS: typing.Dict[str, typing.Type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
@@ -172,9 +171,9 @@ def read_package(
     }
     try:
         return WORKOUT_TO_CLASS[workout_type](*data)
-    except KeyError:
-        raise KeyError(f'«{workout_type}» - от датчиков устройства '
-                       f'получен неизвестный код тренировки.')
+    except ValueError:
+        raise ValueError(f'«{workout_type}» - от датчиков устройства '
+                         'получен неизвестный код тренировки.')
 
 
 def main(training: Training):
